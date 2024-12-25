@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      background-color: black; /* Ustaw kolor tła */
+      font-family: 'Roboto', sans-serif;
+     
+    }
+
+    .fade-in {
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .fade-in.show {
+      opacity: 1;
+    }
+
+
+    #video-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      background-color: b;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #video-overlay video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: black;
+    }
+
+    .logo {
+      width: 150px;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease, opacity 1s ease, box-shadow 0.3s ease;
+      opacity: 0;
+    }
+
+    .logo:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.7);
+    }
+
+    .social-links {
+      margin-top: 20px;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .social-logo {
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      transition: transform 0.3s ease, opacity 1s ease;
+      opacity: 0;
+    }
+
+    .social-logo:hover {
+      transform: scale(1.2);
+    }
+
+    .arrow {
+      margin-top: 40px;
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+      animation: bounce 1.5s infinite;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .arrow img {
+      width: 100%;
+      height: 100%;
+    }
+
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-10px);
+      }
+      60% {
+        transform: translateY(-5px);
+      }
+    }
+
+
+    .arrow-up {
+    position: fixed;
+    bottom: 20px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    animation: bounce 1.5s infinite;
+    opacity: 1;
+    transition: opacity 1s ease, transform 0.3s ease;
+  }
+  .arrow-up img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .arrow-up:hover {
+    transform: scale(1.1);
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-10px);
+    }
+    60% {
+      transform: translateY(-5px);
+    }
+  }
+    .scroll-target {
+      height: 100vh;
+      background-color: black;
+    }
+
+    .animated-text {
+    font-size: 24px;
+    color: white;
+    opacity: 0;
+    animation: fadeInText 3s forwards;
+  }
+
+  @keyframes fadeInText {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  </style>
+</head>
+<body>
+  <div id="video-overlay">
+    <video autoplay muted onended="hideVideoOverlay()">
+      <source src="Comp1.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+  <div class="container" id="content">
+    <a href="https://www.youtube.com/@beqquiet">
+      <img src="bikityvl.png" alt="Logo" class="logo" id="main-logo">
+    </a>
+    <div class="social-links">
+      <a href="https://discord.com" target="_blank">
+        <img src="discord-white-icon.png" alt="Discord" class="social-logo">
+      </a>
+      <a href="https://spotify.com" target="_blank">
+        <img src="spotify-white-icon.png" alt="Spotify" class="social-logo">
+      </a>
+      <a href="https://www.instagram.com/beqquiet_/" target="_blank">
+        <img src="instagram-white-icon.png" alt="Instagram" class="social-logo">
+      </a>
+    </div>
+    <div class="arrow" id="arrow" onclick="scrollDown()">
+      <img src="arrow.png" alt="Scroll Down">
+    </div>
+  </div>
+
+  <div class="container" id="new-content" style="display: none;">
+    <a href="https://www.example.com">
+      <img src="example-logo.png" alt="Example Logo" class="logo" id="example-logo">
+    </a>
+    <div class="social-links">
+      <a href="https://example.com" target="_blank">
+        <img src="example-icon.png" alt="Example" class="social-logo">
+      </a>
+    </div>
+    <div class="animated-text">Tu jeszcze będzie coś wielkiego</div>
+    <div class="arrow-up" id="arrow-up" onclick="scrollUp()">
+      <img src="arrow-up.png" alt="Scroll Up">
+    </div>
+  </div>
+
+  <script>
+    function hideVideoOverlay() {
+      document.getElementById('video-overlay').style.display = 'none';
+      const content = document.getElementById('content');
+      content.style.display = 'flex';
+  
+      // Animacje loga i ikon
+      const mainLogo = document.getElementById('main-logo');
+      const socialLogos = document.querySelectorAll('.social-logo');
+      const arrow = document.getElementById('arrow');
+  
+      setTimeout(() => mainLogo.classList.add('fade-in', 'show'), 300);
+  
+      socialLogos.forEach((logo, index) => {
+        setTimeout(() => {
+          logo.classList.add('fade-in', 'show');
+        }, 500 + index * 200);
+      });
+  
+      setTimeout(() => arrow.classList.add('fade-in', 'show'), 1000);
+    }
+  
+    function scrollDown() {
+      const newContent = document.getElementById('new-content');
+      newContent.style.display = 'flex';
+      newContent.classList.add('fade-in', 'show');
+      newContent.scrollIntoView({ behavior: 'smooth' });
+    }
+  
+    function scrollUp() {
+      const content = document.getElementById('content');
+      content.scrollIntoView({ behavior: 'smooth' });
+      const arrowUp = document.getElementById('arrow-up');
+      arrowUp.style.opacity = '0';
+      setTimeout(() => {
+        arrowUp.style.display = 'none';
+      }, 1000); // Czas trwania animacji opacity
+    }
+  </script>
+</body>
+</html>
